@@ -4,12 +4,9 @@ const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const Member = require("../models/member");
 
-const GOOGLE_CLIENT_ID = "";
-
 passport.use(
   new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID,
       callbackURL: "http://localhost:3000/google/callback",
       passReqToCallback: true,
     },

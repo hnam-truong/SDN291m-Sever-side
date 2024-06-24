@@ -4,9 +4,8 @@ const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const Member = require("../models/member");
 
-const GOOGLE_CLIENT_ID =
-  "626371292115-3fqv7bjsmj0tlb52dhqjev1en5i17b57.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
+const GOOGLE_CLIENT_ID = "";
+const GOOGLE_CLIENT_SECRET = "";
 
 passport.use(
   new GoogleStrategy(

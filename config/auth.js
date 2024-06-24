@@ -5,13 +5,12 @@ const bcrypt = require("bcrypt");
 const Member = require("../models/member");
 
 const GOOGLE_CLIENT_ID = "";
-const GOOGLE_CLIENT_SECRET = "";
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientSecret: "",
       callbackURL: "http://localhost:3000/google/callback",
       passReqToCallback: true,
     },

@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const Member = require("../models/member");
 
 const GOOGLE_CLIENT_ID = "";
-const GOOGLE_CLIENT_SECRET = "";
 
 passport.use(
   new GoogleStrategy(

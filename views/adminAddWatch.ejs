@@ -1,0 +1,108 @@
+<div class="container my-5 bg-white">
+  <div class="mx-auto max-w-7xl">
+    <div class="px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl mb-4 pt-4">Add New Watch</h1>
+      <div class="row g-4">
+        <div class="col-md-4 my-4">
+          <img
+            style="width: 100%"
+            id="watchImage"
+            src=""
+            class="img-fluid object-fit-cover rounded-3"
+            alt="Watch Image"
+          />
+        </div>
+        <div class="col-md-8">
+          <form action="/admin/watches/add" method="POST">
+            <div class="mb-3">
+              <label for="watchName" class="form-label">Watch Name</label>
+              <input
+                type="text"
+                id="watchName"
+                name="watchName"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="image" class="form-label">Image URL</label>
+              <input
+                type="text"
+                id="image"
+                name="image"
+                class="form-control"
+                required
+                oninput="updateImage()"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="watchDescription" class="form-label"
+                >Description</label
+              >
+              <textarea
+                id="watchDescription"
+                name="watchDescription"
+                rows="4"
+                class="form-control"
+                required
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="brand" class="form-label">Brand</label>
+              <select id="brand" name="brand" class="form-select" required>
+                <% brands.forEach(brand => { %>
+                <option value="<%= brand._id %>"><%= brand.brandName %></option>
+                <% }); %>
+              </select>
+            </div>
+
+            <div class="mb-3 form-check p-0">
+              <input
+                type="checkbox"
+                id="automatic"
+                name="automatic"
+                class="form-check-label"
+              />
+              <label class="form-check-label" for="automatic">Automatic</label>
+            </div>
+
+            <div class="mb-3">
+              <button type="submit" class="btn btn-dark w-100">Add Watch</button>
+            </div>
+          </form>
+
+          <div class="my-4">
+            <% if (typeof message !== 'undefined' && message.length > 0) { %>
+            <div
+              class="alert <%= success ? 'alert-success' : 'alert-danger' %>"
+            >
+              <%= message %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateImage() {
+    var imageUrl = document.getElementById("image").value;
+    document.getElementById("watchImage").src = imageUrl;
+  }
+</script>

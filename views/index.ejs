@@ -1,0 +1,153 @@
+<div id="carouselExample" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        src="https://www.swisswatchexpo.com/images/banner-thewatchclub-home.jpg"
+        class="d-block w-100 object-fit-cover"
+        style="height: 30rem"
+        alt="1"
+      />
+    </div>
+    <div class="carousel-item">
+      <img
+        src="https://i.pinimg.com/originals/60/c1/69/60c16934a30f33cbc8c459a21b501c34.jpg"
+        class="d-block w-100 object-fit-cover"
+        style="height: 30rem"
+        alt="2"
+      />
+    </div>
+    <div class="carousel-item">
+      <img
+        src="https://www.thehourglass.com/wp-content/uploads/sites/15/2021/07/Rado-brand-page-banner-1.jpg"
+        class="d-block w-100 object-fit-cover"
+        style="height: 30rem"
+        alt="3"
+      />
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExample"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExample"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div style="min-height: 35rem" class="container">
+  <h1 class="mt-5 mb-3">PRODUCTIONS</h1>
+  <div class="d-flex justify-content-start">
+    <div class="dropdown">
+      <button
+        style="width: 8rem"
+        class="btn dropdown-toggle text-bg-dark"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        All brand
+      </button>
+      <ul class="dropdown-menu">
+        <li><p style="cursor: pointer" class="dropdown-item">All brand</p></li>
+        <% brandData.forEach(brand => { %>
+        <li>
+          <p style="cursor: pointer" class="dropdown-item">
+            <%= brand.brandName %>
+          </p>
+        </li>
+        <%}); %>
+      </ul>
+    </div>
+    <input
+      style="margin-left: 1rem; max-width: 20rem"
+      class="form-control"
+      id="customerInput"
+      type="text"
+      placeholder="Search..."
+    />
+  </div>
+  <div id="watchList" class="mt-2 row justify-content-center">
+    <% watchData.forEach(watch => { %>
+    <div
+      onclick="location.href='/watch/<%= watch._id %>'"
+      class="card m-3 col-1 p-0 card-watch"
+      style="width: 18rem"
+    >
+      <img
+        src="<%= watch.image %>"
+        class="card-img-top object-fit-cover w-100 h-100"
+        alt="<%= watch.watchName %>"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= watch.watchName %></h5>
+        <p class="card-text badge text-bg-dark mb-0">
+          <%= watch.brand ? watch.brand.brandName : 'No Brand' %>
+        </p>
+        <% if (watch.automatic) { %>
+        <p class="card-text badge text-bg-light mb-0">automatic</p>
+        <% } %>
+
+        <hr />
+
+        <h5 class="card-text">$<%= watch.price %></h5>
+      </div>
+    </div>
+    <%}); %>
+  </div>
+  <div id="noResults" class="text-center mt-4" style="display: none">
+    <h4>No watches match your search.</h4>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $("#customerInput").on("keyup", function () {
+      filterWatches();
+    });
+
+    $(".dropdown-item").on("click", function () {
+      var selectedBrand = $(this).text().toLowerCase();
+      $(".dropdown-toggle").text($(this).text());
+      filterWatches();
+    });
+
+    function filterWatches() {
+      var searchValue = $("#customerInput").val().toLowerCase();
+      var selectedBrand = $(".dropdown-toggle").text().toLowerCase().trim();
+      var matches = 0;
+
+      $("#watchList .card").each(function () {
+        var watchName = $(this).find(".card-title").text().toLowerCase();
+        var brand = $(this).find(".badge").text().toLowerCase();
+
+        // Check if it matches the search and the selected brand (or show all)
+        var matchesSearch = watchName.indexOf(searchValue) > -1;
+        var matchesBrand =
+          selectedBrand === "all brand" || brand.indexOf(selectedBrand) > -1;
+
+        // Toggle the card based on both conditions
+        var match = matchesSearch && matchesBrand;
+        $(this).toggle(match);
+        if (match) matches++;
+      });
+
+      // Toggle the noResults message based on matches
+      if (matches === 0) {
+        $("#noResults").show();
+      } else {
+        $("#noResults").hide();
+      }
+    }
+  });
+</script>

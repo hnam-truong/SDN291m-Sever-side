@@ -1,0 +1,88 @@
+<div style="min-height: 80vh" class="container">
+  <h1 style="padding-top: 2rem" class="mb-4">Profile Settings</h1>
+  <div class="">
+    <div>
+      <form
+        class="border border-black rounded-4 p-4"
+        action="/profile/changeMemberName"
+        method="POST"
+        class=""
+      >
+        <div class="">
+          <label for="MemberName" class=""> User Name </label>
+          <input
+            value="<%= memberName %>"
+            type="text"
+            id="MemberName"
+            name="memberName"
+            class="form-control"
+          />
+        </div>
+
+        <div class="my-3">
+      <% if (typeof messageName !== 'undefined' && messageName.length > 0) { %>
+        <div class="alert <%= success && success.length > 0 ? 'alert-success' : 'alert-danger' %>">
+          <%= messageName %>
+        </div>
+      <% } %>
+    </div>
+
+        <div class="">
+          <button style="width: 10rem" class="btn btn-dark mt-3">
+            Change Name
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div>
+      <h1 class="mb-4 mt-5">Password Settings</h1>
+      <div class="">
+        <form
+          class="border border-black rounded-4 p-4"
+          action="/profile/changePassword"
+          method="POST"
+          class=""
+        >
+          <div class="">
+            <label for="CurrentPassword" class="">Current Password </label>
+
+            <input
+              type="password"
+              id="CurrentPassword"
+              name="currentPassword"
+              class="form-control"
+            />
+          </div>
+
+          <div class="mt-3">
+            <label for="NewPassword" class=""> New Password </label>
+
+            <input
+              type="password"
+              id="NewPassword"
+              name="newPassword"
+              class="form-control"
+            />
+          </div>
+
+          <div class="my-3">
+            <% if (typeof message !== 'undefined' && message.length > 0) { %>
+            <div
+              class="alert <%= success && success.length > 0 ? 'alert-success' : 'alert-danger' %>"
+            >
+              <%= message %>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="">
+            <button style="width: 10rem" class="btn btn-dark mt-3">
+              Change Password
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

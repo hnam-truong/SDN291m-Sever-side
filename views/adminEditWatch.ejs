@@ -1,0 +1,125 @@
+<div class="container my-5 bg-white">
+  <div class="mx-auto max-w-7xl">
+    <div class="relative px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold pt-4">Edit Watch</h1>
+      <div class="row">
+        <div class="col-md-4 my-4">
+          <img style="width: 100%;" id="watchImage" src="<%= watch.image %>" class="img-fluid object-fit-cover rounded-3" alt="Watch Image">
+        </div>
+        <div class="col-md-8">
+          <form action="/admin/watches/edit/<%= watch._id %>" method="POST" class="mt-4 row g-3">
+            
+            <div class="col-12">
+              <label for="watchName" class="form-label">Watch Name</label>
+              <input
+                value="<%= watch.watchName %>"
+                type="text"
+                id="watchName"
+                name="watchName"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="col-12">
+              <label for="price" class="form-label">Price</label>
+              <input
+                value="<%= watch.price %>"
+                type="number"
+                id="price"
+                name="price"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="col-12">
+              <label for="image" class="form-label">Image URL</label>
+              <input
+                value="<%= watch.image %>"
+                type="text"
+                id="image"
+                name="image"
+                class="form-control"
+                required
+                oninput="updateImage()"
+              />
+            </div>
+
+            <div class="col-12">
+              <label for="watchDescription" class="form-label">Description</label>
+              <textarea
+                id="watchDescription"
+                name="watchDescription"
+                rows="4"
+                class="form-control"
+                required
+              ><%= watch.watchDescription %></textarea>
+            </div>
+
+            <div class="col-md-12">
+              <label for="brand" class="form-label">Brand</label>
+              <select
+                id="brand"
+                name="brand"
+                class="form-select"
+                required
+              >
+                <% brands.forEach(brand => { %>
+                  <option value="<%= brand._id %>" <%= watch.brand.toString() === brand._id.toString() ? 'selected' : '' %>><%= brand.brandName %></option>
+                <% }); %>
+              </select>
+            </div>
+
+            <div class="col-md-12 d-flex align-items-center">
+              <div class="form-check p-0">
+                <input
+                  class="form-check-label"
+                  type="checkbox"
+                  id="automatic"
+                  name="automatic"
+                  <%= watch.automatic ? 'checked' : '' %>
+                />
+                <label class="form-check-label" for="automatic">
+                  Automatic
+                </label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <button
+                type="submit"
+                class="btn btn-dark w-100"
+              >
+                Edit Watch
+              </button>
+            </div>
+          </form>
+
+          <div class="my-4">
+            <% if (typeof message !== 'undefined' && message.length > 0) { %>
+              <div class="col-12">
+                <% if (success && success.length > 0) { %>
+                  <div class="alert alert-success">
+                    <%= message %>
+                  </div>
+                <% } else { %>
+                  <div class="alert alert-danger">
+                    <%= message %>
+                  </div>
+                <% } %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateImage() {
+    var imageUrl = document.getElementById('image').value;
+    document.getElementById('watchImage').src = imageUrl;
+  }
+</script>
